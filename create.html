@@ -1,0 +1,42 @@
+import * as vscode from 'vscode';
+import * as fs from 'fs';
+
+export function activate(context: vscode.ExtensionContext) {
+    let disposable = vscode.commands.registerCommand('extension.createPortfolio', () => {
+        // Meminta nama file untuk portofolio
+        vscode.window.showInputBox({ prompt: 'Masukkan nama file untuk portofolio (contoh: index.html)' }).then((fileName) => {
+            if (fileName) {
+                // Membuat konten dasar HTML
+                const htmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Welcome to My Portfolio</h1>
+    <p>This is my awesome portfolio!</p>
+    <script src="script.js"></script>
+</body>
+</html>`;
+
+                // Menyimpan konten HTML ke file
+                const filePath = vscode.workspace.rootPath + '/' + fileName;
+                fs.writeFile(filePath, htmlContent, (err) => {
+                    if (err) {
+                        vscode.window.showErrorMessage('Gagal membuat file: ' + err.message);
+                    } else {
+                        vscode.window.showInformationMessage('File portofolio berhasil dibuat: ' + filePath);
+                    }
+                });
+            }
+        });
+    });
+
+    context.subscriptions.push(disposable);
+}
+
+// this method is called when your extension is deactivated
+export function deactivate() {}
