@@ -2,12 +2,12 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 
 export function activate(context: vscode.ExtensionContext) {
-    let disposable = vscode.commands.registerCommand('extension.createPortfolio', () => {
+    let disposable = vscode.commands.registerCommand('extension.createPortfolioContent', () => {
         // Meminta nama file untuk portofolio
         vscode.window.showInputBox({ prompt: 'Masukkan nama file untuk portofolio (contoh: index.html)' }).then((fileName) => {
             if (fileName) {
-                // Membuat konten dasar HTML
-                const htmlContent = `<!DOCTYPE html>
+                // Membuat konten portofolio
+                const portfolioContent = `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,15 +16,42 @@ export function activate(context: vscode.ExtensionContext) {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Welcome to My Portfolio</h1>
-    <p>This is my awesome portfolio!</p>
-    <script src="script.js"></script>
+    <header>
+        <h1>Portofolio Nadhil</h1>
+    </header>
+    <main>
+        <section id="about">
+            <h2>About Me</h2>
+            <p>Halo! saya adalah mahasiswa aktif unievrsitas gunadarma .</p>
+        </section>
+        <section id="projects">
+            <h2>Projects</h2>
+            <ul>
+                <li>
+                    <h3>Nama Proyek 1</h3>
+                    <p>Deskripsi singkat proyek 1.</p>
+                </li>
+                <li>
+                    <h3>Nama Proyek 2</h3>
+                    <p>Deskripsi singkat proyek 2.</p>
+                </li>
+                <!-- Tambahkan proyek-proyek lain sesuai kebutuhan -->
+            </ul>
+        </section>
+        <section id="contact">
+            <h2>Contact Me</h2>
+            <p>Silakan hubungi saya melalui email: nadhilar@email.com</p>
+        </section>
+    </main>
+    <footer>
+        <p>© 2024 Portofolio Nadhil</p>
+    </footer>
 </body>
 </html>`;
 
-                // Menyimpan konten HTML ke file
+                // Menyimpan konten portofolio ke file
                 const filePath = vscode.workspace.rootPath + '/' + fileName;
-                fs.writeFile(filePath, htmlContent, (err) => {
+                fs.writeFile(filePath, portfolioContent, (err) => {
                     if (err) {
                         vscode.window.showErrorMessage('Gagal membuat file: ' + err.message);
                     } else {
